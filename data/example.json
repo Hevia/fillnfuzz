@@ -1,0 +1,36 @@
+{
+    "url": "https://yoururlgoeshere.com/path/to/form",
+    "elements": [
+        {
+            "id":"#FirstName",
+            "type":"input",
+            "inputFile":"./data/inputs/XSS-Fuzzing.txt",
+            "useInputFile": true
+        },
+        {
+            "id":"#LastName",
+            "type":"input",
+            "inputFile":"./data/inputs/UnixAttacks.fuzzdb.txt",
+            "useInputFile": true
+        },
+        {
+            "id":"#Email",
+            "type":"input",
+            "inputFile":"testemail@somethingprobablybusiness.com",
+            "useInputFile": false
+        },
+        {
+            "id":"#Consent",
+            "type":"checkbox",
+            "inputFile":"",
+            "useInputFile": false
+        },
+        {
+            "id":"#Button",
+            "type":"button",
+            "inputFile":"",
+            "useInputFile": false
+        }
+
+    ]
+}

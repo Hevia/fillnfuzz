@@ -1,13 +1,13 @@
 import puppeteer = require('puppeteer');
 
-enum ElementType 
+export enum ElementType 
 {
-    input,
-    button,
-    checkbox
+    input = "input",
+    checkbox = "checkbox",
+    button = "button"
 }
 
-interface AutofillElement 
+export interface AutofillElement 
 {
     elementId: string
     inputData: string
@@ -30,7 +30,7 @@ async function pageClick(page:puppeteer.Page, element: AutofillElement): Promise
     {
         await page.waitForSelector(element.elementId);
         await page.click(element.elementId);
-        console.log(`${element.elementId} has been checked....`);
+        console.log(`${element.elementId} has been clicked....`);
     } catch (error) {
         throw Error(error.message);
     }
@@ -39,6 +39,7 @@ async function pageClick(page:puppeteer.Page, element: AutofillElement): Promise
 async function buttonSubmit(page:puppeteer.Page, element: AutofillElement): Promise<puppeteer.HTTPResponse> {
     try 
     {
+        console.log("Attempting to submit form....")
         await pageClick(page, element);
         return await page.waitForResponse(async(response: puppeteer.HTTPResponse) => {  
             console.log("Status code: " + response.status());
@@ -50,7 +51,7 @@ async function buttonSubmit(page:puppeteer.Page, element: AutofillElement): Prom
     }
 }
 
-async function autofillForms(page:puppeteer.Page, elements: Array<AutofillElement>): Promise<puppeteer.HTTPResponse> {
+export async function autofillForms(page:puppeteer.Page, elements: Array<AutofillElement>): Promise<puppeteer.HTTPResponse> {
     try 
     {
         for (let element of elements) 
@@ -63,11 +64,11 @@ async function autofillForms(page:puppeteer.Page, elements: Array<AutofillElemen
             {
                 if(element.elementType == ElementType.button)
                 {
-                    await pageClick(page, element);
+                    return await buttonSubmit(page, element);
                 }
                 else
                 {
-                    return await buttonSubmit(page, element);
+                    await pageClick(page, element);
                 }
             }
             
